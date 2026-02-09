@@ -1,7 +1,7 @@
 from datetime import datetime
 
+import todo_cli.display as display
 from todo_cli.database import DataBase
-from todo_cli.display import Display
 from todo_cli.status import Status
 from todo_cli.task_model import TaskModel
 
@@ -9,9 +9,11 @@ from todo_cli.task_model import TaskModel
 def main() -> None:
     db: DataBase[str] = DataBase("tasks_db")
 
+    display.greet_user()
+
     run = True
     while run:
-        Display.show_tasks(db.get_tasks())
+        display.show_tasks(db.get_tasks())
 
         command: str = input("\nEnter a command (add, upd, del, exit): ")
 
@@ -25,7 +27,7 @@ def main() -> None:
                 date=datetime.now(),
             )
             db.add_task(task)
-            Display.task_added()
+            display.task_added()
 
         elif command.lower() == "upd":
             task_id = int(input("Enter task ID to update: "))
@@ -44,12 +46,12 @@ def main() -> None:
             task.status = Status(status).value if status else task.status
 
             db.update_task(task)
-            Display.task_updated()
+            display.task_updated()
 
         elif command.lower() == "del":
             task_id = int(input("Enter task ID to delete: "))
             db.delete_task(task_id)
-            Display.task_deleted()
+            display.task_deleted()
 
         elif command.lower() == "exit":
             run = False
