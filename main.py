@@ -39,14 +39,16 @@ def main() -> None:
                 status = int(
                     input(
                         """Enter new task status: (Enter to skip)
-                        (0: NONE, 1: IN_PROGRESS, 2: BLOCKED, 3: COMPLETED): """
+                        (0: NONE, 1: IN_PROGRESS, 2: BLOCKED, 3: DONE): """
                     )
                 )
                 task.title = title if title else task.title
                 task.description = (
                     description if description else task.description
                 )
-                task.status = Status(status).value if status != "" else task.status
+                task.status = (
+                    Status(status).value if status != "" else task.status
+                )
 
                 db.update_task(task)
                 display.task_updated()
