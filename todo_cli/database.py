@@ -19,7 +19,6 @@ class DataBase:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.connection:
             self.connection.close()
-        print(f"\n\n{exc_type}{exc_val}\n{exc_tb}")
 
     def create_table(self) -> None:
         query = """CREATE TABLE "Task" (
@@ -43,7 +42,7 @@ class DataBase:
             id=response[0],
             title=response[1],
             description=response[2],
-            status=response[3],
+            status=Status(response[3]),
             date=response[4],
             edited=response[5],
         )
@@ -60,7 +59,7 @@ class DataBase:
                 id=task[0],
                 title=task[1],
                 description=task[2],
-                status=task[3],
+                status=Status(task[3]),
                 date=task[4],
                 edited=task[5],
             )
@@ -75,9 +74,9 @@ class DataBase:
         data = [
             task.title,
             task.description,
-            Status(task.status).value,
-            str(task.date),
-            str(task.edited),
+            task.status.value,
+            task.date,
+            task.edited,
         ]
         self.cursor.execute(query, data)
         self.connection.commit()
@@ -87,10 +86,10 @@ class DataBase:
                         description = ?, edited = ? WHERE id = ?;"""
 
         data = [
-            Status(task.status).value,
+            task.status.value,
             task.title,
             task.description,
-            str(datetime.now()),
+            datetime.now(),
             task.id,
         ]
         self.cursor.execute(query, data)

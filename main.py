@@ -22,8 +22,7 @@ def main() -> None:
 
                 task = TaskModel(
                     title=title,
-                    description=description,
-                    date=datetime.now(),
+                    description=description
                 )
                 db.add_task(task)
                 display.task_added()
@@ -46,9 +45,7 @@ def main() -> None:
                 task.description = (
                     description if description else task.description
                 )
-                task.status = (
-                    Status(status).value if status != "" else task.status
-                )
+                task.status = Status(status) if status != "" else task.status
 
                 db.update_task(task)
                 display.task_updated()
