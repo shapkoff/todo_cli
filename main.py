@@ -46,7 +46,7 @@ def main() -> None:
                 task.description = (
                     description if description else task.description
                 )
-                task.status = Status(status).value if status else task.status
+                task.status = Status(status).value if status != "" else task.status
 
                 db.update_task(task)
                 display.task_updated()
