@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import todo_cli.display as display
 from todo_cli.database import DataBase
 from todo_cli.status import Status
@@ -20,10 +18,7 @@ def main() -> None:
                 title: str = input("Enter task title: ")
                 description: str = input("Enter task description: ")
 
-                task = TaskModel(
-                    title=title,
-                    description=description
-                )
+                task = TaskModel(title=title, description=description)
                 db.add_task(task)
                 display.task_added()
 

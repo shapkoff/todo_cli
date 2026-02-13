@@ -9,7 +9,7 @@ from todo_cli.task_model import TaskModel
 
 class DataBase:
     def __init__(self, db_name) -> None:
-        self.database_path: str = Path.cwd() / f"{db_name}.db"
+        self.database_path: Path = Path.cwd() / f"{db_name}.db"
 
     def __enter__(self):
         self.connection: Connection = sqlite3.connect(self.database_path)
